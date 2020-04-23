@@ -81,10 +81,12 @@ func loadConfigFromFile() (*config.Config, error) {
 }
 
 func startServer() {
-	cmd := collector.NewCollector(cfg.Clients)
-	prometheus.MustRegister(cmd)
+	collector := collector.NewCollector(cfg.Clients)
+	registry := prometheus.NewRegistry()
+	registry.MustRegister(collector)
+	handler := promhttp.HandlerFor(registry, promhttp.HandlerOpts{})
 
-	http.Handle("/metrics", promhttp.Handler())
+	http.Handle("/metrics", handler)
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		_, _ = w.Write([]byte(`<html>
