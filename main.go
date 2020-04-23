@@ -94,7 +94,7 @@ func loadConfigFromFile() (*config.Config, error) {
 }
 
 func startServer() {
-	collectData()
+	// collectData()
 
 	// handler, err := createMetricsHandler()
 	// if err != nil {
@@ -103,7 +103,7 @@ func startServer() {
 
 	// http.Handle(*metricsPath, handler)
 
-	cmd := collector.NewCollector()
+	cmd := collector.NewCollector(cfg.Clients)
     prometheus.MustRegister(cmd)
 
 	http.Handle("/metrics", promhttp.Handler())
