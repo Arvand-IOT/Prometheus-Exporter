@@ -21,7 +21,7 @@ var (
 	metricsPath = flag.String("path", "/metrics", "path to answer requests on")
 	port        = flag.String("port", ":9437", "port number to listen on")
 	logLevel    = flag.String("log-level", "info", "log level")
-	logFormat   = flag.String("log-format", "json", "logformat text or json (default json)")
+	logFormat   = flag.String("log-format", "text", "logformat text or json (default json)")
 
 	cfg *config.Config
 )
@@ -54,7 +54,10 @@ func configureLog() {
 	log.SetLevel(ll)
 
 	if *logFormat == "text" {
-		log.SetFormatter(&log.TextFormatter{})
+		log.SetFormatter(&log.TextFormatter{
+			DisableColors: true,
+			FullTimestamp: true,
+		})
 	} else {
 		log.SetFormatter(&log.JSONFormatter{})
 	}
