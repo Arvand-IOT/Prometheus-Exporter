@@ -1,20 +1,21 @@
 package main
 
 import (
-	"os"
-	"fmt"
-	"flag"
-	"net/http"
-	"io/ioutil"
 	"bytes"
-	// "encoding/json"
-	
-	"arvand-exporter/config"
-	// "arvand-exporter/collector"
+	"flag"
+	"fmt"
+	"io/ioutil"
+	"net/http"
+	"os"
+	"encoding/json"
+	"strconv"
 
-	log "github.com/sirupsen/logrus"
+	"arvand-exporter/collector"
+	"arvand-exporter/config"
+
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
+	log "github.com/sirupsen/logrus"
 )
 
 var (
@@ -93,15 +94,19 @@ func loadConfigFromFile() (*config.Config, error) {
 }
 
 func startServer() {
-	TemperatureGauge.Set(65.3)
-	HumidityGauge.Set(64.3)
+	collectData()
 
-	handler, err := createMetricsHandler()
-	if err != nil {
-		log.Fatal(err)
-	}
+	// handler, err := createMetricsHandler()
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
 
-	http.Handle(*metricsPath, handler)
+	// http.Handle(*metricsPath, handler)
+
+	cmd := collector.NewCollector()
+    prometheus.MustRegister(cmd)
+
+	http.Handle("/metrics", promhttp.Handler())
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		_, _ = w.Write([]byte(`<html>
@@ -118,9 +123,21 @@ func startServer() {
 }
 
 func createMetricsHandler() (http.Handler, error) {
+	// opts := collectorOptions()
+	// nc, err := collector.NewCollector(cfg, opts...)
+	// nc, err := collector.NewCollector()
+	// if err != nil {
+	// 	return nil, err
+	// }
+
 	registry := prometheus.NewRegistry()
 	registry.MustRegister(TemperatureGauge)
 	registry.MustRegister(HumidityGauge)
+
+	// err = registry.Register(nc)
+	// if err != nil {
+	// 	return nil, err
+	// }
 
 	return promhttp.HandlerFor(registry,
 		promhttp.HandlerOpts{
@@ -128,6 +145,39 @@ func createMetricsHandler() (http.Handler, error) {
 			ErrorHandling: promhttp.ContinueOnError,
 		}), nil
 }
+
+func collectData() {
+	url := "http://192.168.1.29/data"
+
+	res, err := http.Get(url)
+
+	if err != nil {
+		panic(err.Error())
+	}
+
+	body, err := ioutil.ReadAll(res.Body)
+
+	if err != nil {
+		panic(err.Error())
+	}
+
+	var data *config.Sensor
+	json.Unmarshal(body, &data)
+
+	t, _ := strconv.ParseFloat(data.Temperature, 64)
+	h, _ := strconv.ParseFloat(data.Humidity, 64)
+
+	TemperatureGauge.Set(t)
+	HumidityGauge.Set(h)
+}
+
+// func collectorOptions() []collector.Option {
+// 	opts := []collector.Option{}
+
+// 	opts = append(opts, collector.WithTemp())
+
+// 	return opts
+// }
 
 // func main() {
 // 	var conf Conf
