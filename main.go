@@ -103,15 +103,11 @@ func startServer() {
 
 	http.Handle(*metricsPath, handler)
 
-	http.HandleFunc("/healthz", func(w http.ResponseWriter, r *http.Request) {
-		_, _ = w.Write([]byte("ok"))
-	})
-
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		_, _ = w.Write([]byte(`<html>
-			<head><title>Mikrotik Exporter</title></head>
+			<head><title>Arvand Exporter</title></head>
 			<body>
-			<h1>Mikrotik Exporter</h1>
+			<h1>Arvand Exporter</h1>
 			<p><a href="` + *metricsPath + `">Metrics</a></p>
 			</body>
 			</html>`))
