@@ -9,19 +9,19 @@ import (
 
 // Sensor is the output structure for ESP8266
 type Sensor struct {
-    Temperature string `json:"temperature"`
-    Humidity string `json:"humidity"`
+	Temperature string `json:"temperature"`
+	Humidity    string `json:"humidity"`
 }
 
 // Config is structure of config file
 type Config struct {
-    Clients []Client `yaml:"clients"`
+	Clients []Client `yaml:"clients"`
 }
 
 // Client is array of clients in config file
-type Client struct{
+type Client struct {
 	Name string `yaml:"name"`
-	IP string `yaml:"ip"`
+	IP   string `yaml:"ip"`
 }
 
 // Load reads YAML from reader and unmarshals in Config
