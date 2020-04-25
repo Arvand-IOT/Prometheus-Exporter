@@ -22,8 +22,8 @@ utils:
 	@go get github.com/mitchellh/gox
 	@go get github.com/tcnksm/ghr
 
-deploy: utils
-	@echo Build packages ...
+deploy:
+	@echo Build application ...
 	@CGO_ENABLED=0 gox -os="linux" -arch="amd64" -parallel=4 -ldflags "$(LDFLAGS)" -output "dist/arvand-exporter_{{.OS}}_{{.Arch}}"
 	@echo Create release ...
 	@ghr -t ${GITHUB_TOKEN} -u ${USERNAME} -r ${REPONAME} -replace ${VERSION} dist/
