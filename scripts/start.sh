@@ -6,7 +6,8 @@ fi
 
 if [ -z "$CONFIG_FILE" ]
 then
-    /app/arvand-exporter -device $DEVICE -address $ADDRESS -user $USER -password $PASSWORD
+  printf '%s\n' "You should set a config file" >&2
+  exit 1
 else
-    /app/arvand-exporter -config-file $CONFIG_FILE
+    /app/arvand-exporter --config-file $CONFIG_FILE
 fi
