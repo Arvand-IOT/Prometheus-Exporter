@@ -63,9 +63,7 @@
       "options": {
         "colorMode": "value",
         "fieldOptions": {
-          "calcs": [
-            "last"
-          ],
+          "calcs": ["last"],
           "defaults": {
             "mappings": [],
             "thresholds": {
@@ -143,9 +141,7 @@
       "options": {
         "colorMode": "value",
         "fieldOptions": {
-          "calcs": [
-            "last"
-          ],
+          "calcs": ["last"],
           "defaults": {
             "mappings": [],
             "thresholds": {
