@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+  arvand:
+    image: hatamiarash7/arvand-exporter:1.0
+    restart: unless-stopped
+    container_name: arvand-iot
+    ports:
+      - 9437:9437
+    environment:
+      - CONFIG_FILE=/app/config.yml
+    volumes:
+      - ./config.yml:/app/config.yml
