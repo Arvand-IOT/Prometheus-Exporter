@@ -1,4 +1,4 @@
-FROM debian:stretch-20220125-slim
+FROM debian:stretch-20220509-slim
 
 EXPOSE 9437
 
