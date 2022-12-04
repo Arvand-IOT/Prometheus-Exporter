@@ -17,11 +17,11 @@ import (
 )
 
 var (
-	configFile  = flag.String("config-file", "", "config file to load")
-	metricsPath = flag.String("path", "/metrics", "path to answer requests on")
-	port        = flag.String("port", ":9437", "port number to listen on")
-	logLevel    = flag.String("log-level", "info", "log level")
-	logFormat   = flag.String("log-format", "text", "logformat text or json (default json)")
+	configFile  = flag.String("config-file", "", "The config file to load")
+	metricsPath = flag.String("path", "/metrics", "Path to answer requests on ( Default /metrics )")
+	port        = flag.String("port", ":9437", "Port number to listen on ( Default: 9437 )")
+	logLevel    = flag.String("log-level", "info", "Log level ( Default: info )")
+	logFormat   = flag.String("log-format", "text", "Log format. text / json ( Default: text )")
 
 	cfg *config.Config
 )
