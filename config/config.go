@@ -24,7 +24,7 @@ type Client struct {
 	IP   string `yaml:"ip"`
 }
 
-// Load reads YAML from reader and unmarshals in Config
+// Load reads YAML from reader and unmarshal in Config
 func Load(r io.Reader) (*Config, error) {
 	b, err := ioutil.ReadAll(r)
 	if err != nil {
