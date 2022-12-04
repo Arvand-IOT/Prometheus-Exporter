@@ -32,7 +32,7 @@ docker: build ## Build & push Docker image
 	docker buildx create --name mybuilder --use
 	docker buildx build -t ${DOCKER_USERNAME}/${REPONAME}:${VERSION} -t ${DOCKER_USERNAME}/${REPONAME}:latest --platform=linux/arm64,linux/amd64 . --push
 
-docker-dev: utils build ## Build Docker image
+docker-dev: build ## Build Docker image
 	docker buildx build -t ${DOCKER_USERNAME}/${REPONAME}:${VERSION} . --load
 
 help: ## Show this help
