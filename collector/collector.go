@@ -63,20 +63,18 @@ func (collector *SensorCollector) Collect(ch chan<- prometheus.Metric) {
 		if err != nil {
 			log.WithFields(log.Fields{
 				"IP": client.IP,
-			}).Warn("Client not reachable !")
+			}).Error("Client not reachable:")
 		} else {
-
 			body, err := ioutil.ReadAll(res.Body)
 
 			if err != nil {
 				log.WithFields(log.Fields{
 					"IP": client.IP,
-				}).Warn("Error fetching data !")
+				}).Error("Error fetching data:")
 			} else {
-
 				log.WithFields(log.Fields{
 					"IP": client.IP,
-				}).Info("Done !")
+				}).Info("Done:")
 
 				var data *config.Sensor
 				json.Unmarshal(body, &data)
@@ -87,7 +85,6 @@ func (collector *SensorCollector) Collect(ch chan<- prometheus.Metric) {
 				ch <- prometheus.MustNewConstMetric(collector.temperatureMetric, prometheus.GaugeValue, t, client.Name)
 				ch <- prometheus.MustNewConstMetric(collector.humidityMetric, prometheus.GaugeValue, h, client.Name)
 			}
-
 		}
 	}
 

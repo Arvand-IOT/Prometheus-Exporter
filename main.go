@@ -33,7 +33,7 @@ func main() {
 
 	log.Info("Welcome to Arvand Prometheus Exporter")
 
-	log.Info("Version : 1.0")
+	log.Info("Version: 1.1.0")
 
 	c, err := loadConfig()
 	if err != nil {
@@ -55,7 +55,6 @@ func configureLog() {
 
 	if *logFormat == "text" {
 		log.SetFormatter(&log.TextFormatter{
-			DisableColors: true,
 			FullTimestamp: true,
 		})
 	} else {
@@ -68,7 +67,7 @@ func loadConfig() (*config.Config, error) {
 		return loadConfigFromFile()
 	}
 
-	return nil, fmt.Errorf("missing config file")
+	return nil, fmt.Errorf("Missing config file")
 }
 
 func loadConfigFromFile() (*config.Config, error) {
