@@ -19,5 +19,3 @@ debug
 dist/
 config.yml
 .env
-arvand-exporter
-RUN.md

@@ -1,11 +1,12 @@
-FROM debian:stretch-20220125-slim
+FROM alpine:latest
 
-EXPOSE 9437
+ARG TARGETOS
+ARG TARGETARCH
+
+COPY dist/arvand-exporter_${TARGETOS}_${TARGETARCH} /app/arvand-exporter
 
 COPY scripts/start.sh /app/
 
-COPY dist/arvand-exporter_linux_amd64 /app/arvand-exporter
-
-RUN chmod 755 /app/*
+EXPOSE 9437
 
 ENTRYPOINT ["/app/start.sh"]
