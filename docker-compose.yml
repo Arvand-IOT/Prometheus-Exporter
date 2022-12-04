@@ -2,9 +2,9 @@ version: "3.9"
 
 services:
     arvand:
-        image: hatamiarash7/arvand-exporter:1.0
+        image: hatamiarash7/arvand-exporter:1.1.0
         restart: unless-stopped
-        container_name: arvand-iot
+        container_name: arvand-exporter
         ports:
             - 9437:9437
         environment:
