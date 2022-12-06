@@ -31,6 +31,7 @@ docker: build ## Build & push Docker image
 	@echo ${DOCKER_TOKEN} | docker login --username ${DOCKER_USERNAME} --password-stdin
 	docker buildx create --name mybuilder --use
 	docker buildx build -t ${DOCKER_USERNAME}/${REPONAME}:${VERSION} -t ${DOCKER_USERNAME}/${REPONAME}:latest --platform=linux/arm64,linux/amd64 . --push
+	docker buildx rm mybuilder
 
 docker-dev: build ## Build Docker image
 	docker buildx build -t ${DOCKER_USERNAME}/${REPONAME}:${VERSION} . --load
