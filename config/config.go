@@ -11,6 +11,8 @@ import (
 type Sensor struct {
 	Temperature string `json:"temperature"`
 	Humidity    string `json:"humidity"`
+	AirQuality  string `json:"air"`
+	Light       string `json:"light"`
 }
 
 // Config is structure of config file

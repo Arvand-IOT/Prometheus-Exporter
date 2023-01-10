@@ -21,6 +21,8 @@ var (
 type SensorCollector struct {
 	temperatureMetric *prometheus.Desc
 	humidityMetric    *prometheus.Desc
+	airQualityMetric  *prometheus.Desc
+	lightMetric       *prometheus.Desc
 }
 
 // NewCollector is the main collector function
@@ -36,6 +38,14 @@ func NewCollector(c []config.Client) *SensorCollector {
 			"humidity value from 100",
 			[]string{"name"}, nil,
 		),
+		airQualityMetric: prometheus.NewDesc("air",
+			"air quality value",
+			[]string{"name"}, nil,
+		),
+		lightMetric: prometheus.NewDesc("light",
+			"light value",
+			[]string{"name"}, nil,
+		),
 	}
 }
 
@@ -43,6 +53,8 @@ func NewCollector(c []config.Client) *SensorCollector {
 func (collector *SensorCollector) Describe(ch chan<- *prometheus.Desc) {
 	ch <- collector.temperatureMetric
 	ch <- collector.humidityMetric
+	ch <- collector.airQualityMetric
+	ch <- collector.lightMetric
 }
 
 // Collect data for metrics
@@ -59,6 +71,8 @@ func (collector *SensorCollector) Collect(ch chan<- prometheus.Metric) {
 
 		var t float64 = 0.0
 		var h float64 = 0.0
+		var a float64 = 0.0
+		var l float64 = 0.0
 
 		if err != nil {
 			log.WithFields(log.Fields{
@@ -81,9 +95,13 @@ func (collector *SensorCollector) Collect(ch chan<- prometheus.Metric) {
 
 				t, _ = strconv.ParseFloat(data.Temperature, 64)
 				h, _ = strconv.ParseFloat(data.Humidity, 64)
+				a, _ = strconv.ParseFloat(data.AirQuality, 64)
+				l, _ = strconv.ParseFloat(data.Light, 64)
 
 				ch <- prometheus.MustNewConstMetric(collector.temperatureMetric, prometheus.GaugeValue, t, client.Name)
 				ch <- prometheus.MustNewConstMetric(collector.humidityMetric, prometheus.GaugeValue, h, client.Name)
+				ch <- prometheus.MustNewConstMetric(collector.airQualityMetric, prometheus.GaugeValue, a, client.Name)
+				ch <- prometheus.MustNewConstMetric(collector.lightMetric, prometheus.GaugeValue, l, client.Name)
 			}
 		}
 	}
