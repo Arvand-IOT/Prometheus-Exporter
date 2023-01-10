@@ -31,7 +31,7 @@ func main() {
 
 	configureLog()
 
-	log.Info("Welcome to Arvand Prometheus Exporter")
+	log.Info("Welcome to Arvand Prometheus exporter")
 
 	log.Info("Version: 1.1.0")
 
