@@ -21,3 +21,12 @@ clients:
   - name: Room 4
     ip: 192.168.1.5
 ```
+
+## Metrics
+
+We have these metrics at this moment:
+
+- Temperature
+- Humidity
+- Air Quality
+- Light
