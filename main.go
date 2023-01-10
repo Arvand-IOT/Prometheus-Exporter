@@ -33,7 +33,7 @@ func main() {
 
 	log.Info("Welcome to Arvand Prometheus exporter")
 
-	log.Info("Version: 1.1.0")
+	log.Info("Version: 1.2.0")
 
 	c, err := loadConfig()
 	if err != nil {
