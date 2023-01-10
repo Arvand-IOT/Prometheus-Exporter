@@ -32,19 +32,19 @@ func NewCollector(c []config.Client) *SensorCollector {
 	return &SensorCollector{
 		temperatureMetric: prometheus.NewDesc("temperature",
 			"temperature value in celsius",
-			[]string{"name"}, nil,
+			[]string{"location"}, nil,
 		),
 		humidityMetric: prometheus.NewDesc("humidity",
 			"humidity value from 100",
-			[]string{"name"}, nil,
+			[]string{"location"}, nil,
 		),
 		airQualityMetric: prometheus.NewDesc("air",
 			"air quality value",
-			[]string{"name"}, nil,
+			[]string{"location"}, nil,
 		),
 		lightMetric: prometheus.NewDesc("light",
 			"light value",
-			[]string{"name"}, nil,
+			[]string{"location"}, nil,
 		),
 	}
 }
